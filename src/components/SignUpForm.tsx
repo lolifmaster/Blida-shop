@@ -11,6 +11,7 @@ import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { toast } from "sonner";
 import { trpc } from "@/trpc/client";
+import { Mulish } from "next/font/google";
 
 const SignUpForm = () => {
   const {
@@ -21,10 +22,10 @@ const SignUpForm = () => {
     resolver: zodResolver(AuthCredentialsValidator),
   });
 
-  const { data } = trpc.apiRoute.useQuery();
-  console.log(data);
+  const { mutate, isLoading } = trpc.auth.createPayloadUser.useMutation();
+
   const submit = ({ email, password }: AuthCredentials) => {
-    // Send the form data to the server
+    mutate({ email, password });
   };
 
   return (
@@ -36,6 +37,7 @@ const SignUpForm = () => {
             <Input
               {...register("email")}
               id="email"
+              type="email"
               className={cn({
                 "focus-visible:ring-red-500": true,
               })}
@@ -47,6 +49,7 @@ const SignUpForm = () => {
             <Input
               {...register("password")}
               id="password"
+              type="password"
               className={cn({
                 "focus-visible:ring-red-500": true,
               })}
