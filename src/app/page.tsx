@@ -34,7 +34,7 @@ export default function Home() {
     <>
       <MaxWidthWrapper>
         <div className="mx-auto flex max-w-3xl flex-col items-center py-20 text-center">
-          <h1 className="text-4xl font-bold sm:text-6xl">
+          <h1 className="text-4xl font-bold sm:text-6xl sm:leading-tight">
             The biggest E-commerce platform on{" "}
             <span className="text-primary">Blida</span>.
           </h1>
@@ -43,7 +43,10 @@ export default function Home() {
             products at the best prices.
           </p>
           <div className="mt-6 flex flex-col gap-4 sm:flex-row">
-            <Link href="/products" className={buttonVariants()}>
+            <Link
+              href="/products"
+              className={buttonVariants({ className: "animate-pulse" })}
+            >
               Shop Now &rarr;
             </Link>
           </div>
