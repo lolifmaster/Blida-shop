@@ -57,7 +57,7 @@ const NavItem: FC<NavItemProps> = ({
                 <div className="col-span-4 col-start-1 grid grid-cols-3 gap-x-8">
                   {category.featured.map((item) => (
                     <div
-                      key={category.value}
+                      key={item.name}
                       className="group relative text-base sm:text-sm"
                     >
                       <div className="relative aspect-video overflow-clip rounded-lg bg-background group-hover:opacity-75">

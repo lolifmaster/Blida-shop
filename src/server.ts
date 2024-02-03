@@ -15,7 +15,7 @@ const start = async () => {
     },
   });
 
-  app.use((req, res) => nextHandler(req, res, payload));
+  app.use((req, res) => nextHandler(req, res));
 
   nextApp.prepare().then(() => {
     // payload.logger.info("Next.js server is running");
