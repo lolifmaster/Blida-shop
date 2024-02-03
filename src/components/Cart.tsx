@@ -68,7 +68,7 @@ const Cart = () => {
         ) : (
           <div className="grid h-full place-content-center space-y-1">
             <div className="relative mb-4 h-60 w-60 text-muted">
-              <ShoppingCart className="absolute h-full w-full" />
+              <ShoppingCart className="absolute h-full w-full text-primary/10" />
             </div>
             <p className="text-center text-muted-foreground">
               Your cart is empty
