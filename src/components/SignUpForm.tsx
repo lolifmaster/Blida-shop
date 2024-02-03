@@ -1,5 +1,6 @@
 "use client";
 import { cn } from "@/lib/utils";
+import { trpc } from "@/trpc/client";
 import {
   AuthCredentials,
   AuthCredentialsValidator,
@@ -9,9 +10,6 @@ import { useForm } from "react-hook-form";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
-import { toast } from "sonner";
-import { trpc } from "@/trpc/client";
-import { Mulish } from "next/font/google";
 
 const SignUpForm = () => {
   const {

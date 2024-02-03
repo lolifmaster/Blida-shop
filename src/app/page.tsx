@@ -33,7 +33,7 @@ export default function Home() {
   return (
     <>
       <MaxWidthWrapper>
-        <div className="mx-auto flex max-w-3xl flex-col items-center py-20 text-center">
+        <div className="mx-auto flex max-w-3xl flex-col items-center py-16 text-center">
           <h1 className="text-4xl font-bold sm:text-6xl sm:leading-tight">
             The biggest E-commerce platform on{" "}
             <span className="text-primary">Blida</span>.
