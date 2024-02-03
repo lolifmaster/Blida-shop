@@ -17,7 +17,7 @@ const VerifyEmail: FC<VerifyEmailProps> = ({ token }) => {
     {
       onSuccess: () => {
         setTimeout(() => {
-          router.push("/login");
+          router.push("/sign-in");
         }, 2000);
       },
     },

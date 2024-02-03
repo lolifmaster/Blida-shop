@@ -6,16 +6,18 @@ import {
   AuthCredentialsValidator,
 } from "@/validators/account-credentials";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { ZodError } from "zod";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
-import { useRouter } from "next/navigation";
 
 const SignUpForm = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const isSeller = searchParams.get("as") === "seller";
+  const origin = searchParams.get("origin");
   const {
     register,
     handleSubmit,
@@ -25,26 +27,44 @@ const SignUpForm = () => {
     mode: "onChange",
   });
 
-  const { mutate, isLoading } = trpc.auth.createPayloadUser.useMutation({
-    onError: (error) => {
-      if (error.data?.code === "CONFLICT") {
-        toast.error(error.message);
+  const { mutate: SignIn, isLoading } = trpc.auth.signIn.useMutation({
+    onSuccess: () => {
+      toast.success("Welcome back!");
+      router.refresh();
+
+      if (origin) {
+        router.push(`/${origin}`);
         return;
       }
-      if (error instanceof ZodError) {
-        toast.error(error.issues[0].message);
+
+      if (isSeller) {
+        router.push("/seller");
         return;
       }
-      toast.error("Something went wrong. Please try again later.");
+
+      router.push("/");
     },
-    onSuccess: ({ sentToEmail }) => {
-      toast.success(`Verification email sent to ${sentToEmail}`);
-      router.push("/verify-email?to=" + sentToEmail);
+
+    onError: (error) => {
+      if (error.data?.code === "UNAUTHORIZED") {
+        toast.error("Invalid email or password");
+        return;
+      }
+
+      toast.error("Something went wrong");
     },
   });
 
+  const continueAsSeller = () => {
+    router.push("?as=seller");
+  };
+
+  const continueAsCustomer = () => {
+    router.replace("/sign-in", undefined);
+  };
+
   const submit = ({ email, password }: AuthCredentials) => {
-    mutate({ email, password });
+    SignIn({ email, password });
   };
   return (
     <div className="grid gap-6">
@@ -86,6 +106,33 @@ const SignUpForm = () => {
           <Button disabled={isLoading}>Sign up</Button>
         </div>
       </form>
+
+      <div className="relative">
+        <div aria-hidden="true" className="absolute inset-0 flex items-center">
+          <span className="w-full border-t" />
+        </div>
+        <div className="relative flex justify-center text-xs uppercase">
+          <span className="bg-background px-2 text-muted-foreground">or</span>
+        </div>
+      </div>
+
+      {isSeller ? (
+        <Button
+          variant="secondary"
+          disabled={isLoading}
+          onClick={continueAsCustomer}
+        >
+          continue as a customer
+        </Button>
+      ) : (
+        <Button
+          variant="secondary"
+          disabled={isLoading}
+          onClick={continueAsSeller}
+        >
+          continue as a seller
+        </Button>
+      )}
     </div>
   );
 };

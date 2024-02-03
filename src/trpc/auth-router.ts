@@ -51,7 +51,6 @@ export const authRouter = router({
       const { token } = input;
       const payload = await getPayloadClient();
 
-      // verify the email
       const isVerified = await payload.verifyEmail({
         collection: "users",
         token,
@@ -61,6 +60,34 @@ export const authRouter = router({
         throw new TRPCError({
           code: "UNAUTHORIZED",
           message: "Invalid token",
+        });
+      }
+
+      return {
+        success: true,
+      };
+    }),
+
+  signIn: publicProcedure
+    .input(AuthCredentialsValidator)
+    .mutation(async ({ input, ctx }) => {
+      const { email, password } = input;
+      const { res } = ctx;
+      const payload = await getPayloadClient();
+
+      try {
+        await payload.login({
+          collection: "users",
+          data: {
+            email,
+            password,
+          },
+          res,
+        });
+      } catch (error) {
+        throw new TRPCError({
+          code: "UNAUTHORIZED",
+          message: "Invalid credentials",
         });
       }
 
