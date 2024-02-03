@@ -4,6 +4,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import NavBar from "@/components/NavBar";
 import { Toaster } from "@/components/ui/sonner";
+import Providers from "@/components/Providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,11 +23,13 @@ export default function RootLayout({
       <body
         className={cn("relative h-full font-sans antialiased", inter.className)}
       >
-        <main className="relative flex min-h-screen flex-col">
-          <NavBar />
-          <div className="flex-1 flex-grow">{children}</div>
-        </main>
-        <Toaster />
+        <Providers>
+          <main className="relative flex min-h-screen flex-col">
+            <NavBar />
+            <div className="flex-1 flex-grow">{children}</div>
+          </main>
+          <Toaster />
+        </Providers>
       </body>
     </html>
   );
