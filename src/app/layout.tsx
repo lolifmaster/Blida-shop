@@ -28,7 +28,7 @@ export default function RootLayout({
             <NavBar />
             <div className="flex-1 flex-grow">{children}</div>
           </main>
-          <Toaster />
+          <Toaster position="top-center" richColors />
         </Providers>
       </body>
     </html>
