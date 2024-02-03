@@ -3,7 +3,7 @@ import { mongooseAdapter } from "@payloadcms/db-mongodb";
 import { slateEditor } from "@payloadcms/richtext-slate";
 import { webpackBundler } from "@payloadcms/bundler-webpack";
 import path from "path";
-import { Users } from "./trpc/collections/Users";
+import { Users } from "./collections/Users";
 import dotenv from "dotenv";
 
 dotenv.config({
@@ -36,6 +36,6 @@ export default buildConfig({
   },
 
   typescript: {
-    outputFile: path.relative(__dirname, "payload.generated.ts"),
+    outputFile: path.resolve(__dirname, "payload-types.ts"),
   },
 });
