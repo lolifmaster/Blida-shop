@@ -31,16 +31,14 @@ const SignUpForm = () => {
   const { mutate: SignIn, isLoading } = trpc.auth.signIn.useMutation({
     onSuccess: () => {
       toast.success("Welcome back!");
-
+      router.refresh();
       if (origin) {
         router.push(`/${origin}`);
-        router.refresh();
         return;
       }
 
       if (isSeller) {
         router.push("/seller");
-        router.refresh();
         return;
       }
 
