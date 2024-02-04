@@ -1,13 +1,17 @@
+import { getServerSideUser } from "@/lib/payload-utils";
+import { cookies } from "next/headers";
 import Link from "next/link";
-import MaxWidthWrapper from "./MaxWidthWrapper";
+import Cart from "./Cart";
 import { Icons } from "./Icons";
+import MaxWidthWrapper from "./MaxWidthWrapper";
 import NavItems from "./NavItems";
 import { buttonVariants } from "./ui/button";
 import { Separator } from "./ui/separator";
-import Cart from "./Cart";
+import UserAccountNav from "./UserAccountNav";
 
-const NavBar = () => {
-  const user = null;
+const NavBar = async () => {
+  const nextCookies = cookies();
+  const data = await getServerSideUser(nextCookies);
   return (
     <div className="sticky inset-x-0 top-0 z-50 h-16 bg-background">
       <header className="relative ">
@@ -28,7 +32,7 @@ const NavBar = () => {
 
               <div className="ml-auto flex items-center">
                 <div className="hidden flex-1 items-center justify-end space-x-6 lg:flex">
-                  {user ? null : (
+                  {data?.user ? null : (
                     <Link
                       href="/sign-in"
                       className={buttonVariants({ variant: "ghost" })}
@@ -36,7 +40,7 @@ const NavBar = () => {
                       Sign In
                     </Link>
                   )}
-                  {user ? null : (
+                  {data?.user ? null : (
                     <Separator
                       orientation="vertical"
                       className="h-6"
@@ -44,8 +48,8 @@ const NavBar = () => {
                     />
                   )}
 
-                  {user ? (
-                    <p></p>
+                  {data?.user ? (
+                    <UserAccountNav user={data?.user} />
                   ) : (
                     <Link
                       href="/sign-up"
@@ -55,7 +59,7 @@ const NavBar = () => {
                     </Link>
                   )}
 
-                  {user ? (
+                  {data?.user ? (
                     <Separator
                       orientation="vertical"
                       className="h-6"
@@ -63,7 +67,7 @@ const NavBar = () => {
                     />
                   ) : null}
 
-                  {user ? null : (
+                  {data?.user ? null : (
                     <div className="flex lg:ml-6">
                       <Separator
                         orientation="vertical"
