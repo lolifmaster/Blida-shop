@@ -45,7 +45,9 @@ export default function Home() {
           <div className="mt-6 flex flex-col gap-4 sm:flex-row">
             <Link
               href="/products"
-              className={buttonVariants({ className: "animate-pulse" })}
+              className={buttonVariants({
+                className: "animate-pulse hover:animate-none",
+              })}
             >
               Shop Now &rarr;
             </Link>
