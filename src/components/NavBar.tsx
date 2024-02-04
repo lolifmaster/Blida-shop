@@ -8,6 +8,7 @@ import NavItems from "./NavItems";
 import { buttonVariants } from "./ui/button";
 import { Separator } from "./ui/separator";
 import UserAccountNav from "./UserAccountNav";
+import ThemeControler from "./ThemeControler";
 
 const NavBar = async () => {
   const nextCookies = cookies();
@@ -32,6 +33,7 @@ const NavBar = async () => {
 
               <div className="ml-auto flex items-center">
                 <div className="hidden flex-1 items-center justify-end space-x-6 lg:flex">
+                  <ThemeControler />
                   {data?.user ? null : (
                     <Link
                       href="/sign-in"

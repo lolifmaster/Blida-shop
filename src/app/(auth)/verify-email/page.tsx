@@ -20,7 +20,7 @@ const page = ({ searchParams }: PageProps) => {
         ) : (
           <div className="flex h-full flex-col items-center justify-center space-y-1">
             <div className="relative mb-4 h-60 w-60 text-muted-foreground">
-              <MailCheck className="absolute h-full w-full animate-bounce text-ring" />
+              <MailCheck className="absolute h-full w-full text-primary" />
             </div>
             <h3 className="text-2xl font-semibold">Check your email</h3>
             {toEmail && typeof toEmail === "string" ? (

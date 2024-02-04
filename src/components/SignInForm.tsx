@@ -1,4 +1,5 @@
 "use client";
+
 import { cn } from "@/lib/utils";
 import { trpc } from "@/trpc/client";
 import {
@@ -30,19 +31,21 @@ const SignUpForm = () => {
   const { mutate: SignIn, isLoading } = trpc.auth.signIn.useMutation({
     onSuccess: () => {
       toast.success("Welcome back!");
-      router.refresh();
 
       if (origin) {
         router.push(`/${origin}`);
+        router.refresh();
         return;
       }
 
       if (isSeller) {
         router.push("/seller");
+        router.refresh();
         return;
       }
 
       router.push("/");
+      router.refresh();
     },
 
     onError: (error) => {

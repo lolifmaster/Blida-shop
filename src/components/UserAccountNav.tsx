@@ -12,18 +12,26 @@ import {
 } from "./ui/dropdown-menu";
 import Link from "next/link";
 import { useAuth } from "@/hooks/use-auth";
+import { Loader2 } from "lucide-react";
 
 type UserAccountNavProps = {
   user: User;
 };
 
 const UserAccountNav: FC<UserAccountNavProps> = ({ user }) => {
-  const { signOut } = useAuth();
+  const { mutate: signOut, isLoading } = useAuth();
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild className="overflow-visible">
         <Button variant="ghost" size="sm" className="relative">
-          My Account
+          {isLoading ? (
+            <>
+              Logout <Loader2 className="ml-2 animate-spin text-primary" />
+            </>
+          ) : (
+            "My Account"
+          )}
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-60 bg-background" align="end">
@@ -36,7 +44,7 @@ const UserAccountNav: FC<UserAccountNavProps> = ({ user }) => {
         <DropdownMenuItem asChild>
           <Link href="/sell">Seller Dashboard</Link>
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={signOut} className="cursor-pointer">
+        <DropdownMenuItem onClick={() => signOut()} className="cursor-pointer">
           Log out
         </DropdownMenuItem>
       </DropdownMenuContent>
